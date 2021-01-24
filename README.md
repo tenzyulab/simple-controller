@@ -1,51 +1,51 @@
 # Simple Controller
 
-> With Simple Controller, you can control the server in a better way.
+> Simple Controller は Discord サーバーの操作をよりよくする bot です。
 
 > ## **[✉️ Click To Invite !](https://discord.com/api/oauth2/authorize?client_id=802867226700677120&permissions=8&scope=bot)**
 
-## How to Use [WIP]
+## 使い方 [筆記中]
 
-Use `?help` to check the features.
+`?help` で機能を確認できます。
 
-### Required Permissions
+### 必要な権限
 
-- Administrator
+- Administrator (管理者)
 
 ## How to Contribute
 
-### Note
+### 注意事項
 
-- Lang: python3.7.x
-- Host: Google Compute Engine
-- Development Style: GitHub flow
-- Editor: Visual Studio Code and Pycharm
+- 言語: python3.7.x
+- ホスト: Google Compute Engine
+- 開発スタイル: GitHub flow
+- 使用されているエディタ: `Visual Studio Code` and `Pycharm`
 
 ### Development
 
-1. Clone this repository
+1. このリポジトリをクローンしてください。
 
-2. `python3.7 -m venv .venv` to create a virtual environment
+2. `python3.7 -m venv .venv` で仮想環境を作ることをお勧めします。
 
-3. `. .venv/bin/activate` to enter the virtual environment.
+3. `. .venv/bin/activate` で仮想環境に入ります。
 
-4. `pip install -r requirements.txt` to install packages
+4. `pip install -r requirements.txt` で必要なものをインストールします。
 
-5. `cp .env-sample .env` to create .env file
+5. `cp .env-sample .env` サンプルから .env ファイルを作ります。
 
-6. Please paste your DISCORD_BOT_TOKEN to .env
+6. .env の DISCORD_BOT_TOKEN に トークンを貼り付けてください。
 
-7. `python3.7 launcher.py` to start a bot
+7. `python3.7 launcher.py` で bot を起動できます。
 
 <hr />
 
-If you have a **unresolved or new problem**, please open an **Issue** or send a direct message to **[Twitter](https://twitter.com/tenzyumasuda)**. Feel free to do so!
+**解決しない or 新しい問題** があれば **Issue** を立てるか、**[Twitter](https://twitter.com/tenzyumasuda)** にダイレクトメッセージを送ってください。気軽にどうぞ！
 
 <br />
 
 <br />
 
-<p align="center">© 2021 Tenzyu Masuda</p>
+<p align="center">©️ 2021 Tenzyu Masuda</p>
 
 <br />
 
