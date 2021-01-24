@@ -19,7 +19,7 @@ Use `?help` to check the features.
 - Lang: python3.7.x
 - Host: Google Compute Engine
 - Development Style: GitHub flow
-- Editor: Visual Studio Code
+- Editor: Visual Studio Code and Pycharm
 
 ### Development
 
