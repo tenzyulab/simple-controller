@@ -1,15 +1,12 @@
 from asyncio import TimeoutError
 
 from discord import Embed
-from discord.ext.commands import Cog, command, group
+from discord.ext.commands import Cog, command, group, has_permissions
 
 
 class TextChannel(Cog):
     def __init__(self, bot):
         self.bot = bot
-
-    async def has_permission_manage_messages(self, ctx):
-        return ctx.author.permissions_in(ctx.channel).manage_messages
 
     @group()
     async def channel(self, ctx):
@@ -18,26 +15,18 @@ class TextChannel(Cog):
             await ctx.send("サブコマンドを指定してください。")
 
     @channel.command()
+    @has_permissions(manage_messages=True)
     async def purge(self, ctx, number: int):
         """purge <number> で指定された数のメッセージを一括削除します。"""
-        if not await self.has_permission_manage_messages(ctx):
-            await ctx.send("あなたにはメッセージの管理権限がありません。")
-            return
         await ctx.channel.purge(limit=number + 1)
         embed = Embed(description=f"メッセージを{number}件削除しました。", colour=0x000000)
         embed.set_footer(text="このメッセージは10秒後に自動で削除されます。")
         await ctx.send(embed=embed, delete_after=10)
 
-    @command(name="purge", aliases=["p", "cp"])
-    async def _purge(self, ctx, number):
-        await self.purge(ctx, number)
-
     @channel.command()
+    @has_permissions(manage_messages=True)
     async def purgeall(self, ctx):
         """全てのメッセージを一括削除します。"""
-        if not await self.has_permission_manage_messages(ctx):
-            await ctx.send("あなたにはメッセージの管理権限がありません。")
-            return
         await ctx.send(
             f"""{ctx.author.mention} 本当に全てのメッセージを一括削除しますか？\n
         実行する場合は20秒以内に `y` を送信してください。\n
@@ -60,7 +49,13 @@ class TextChannel(Cog):
         embed.set_footer(text="このメッセージは10秒後に自動で削除されます。")
         await ctx.send(embed=embed, delete_after=10)
 
-    @command(name="purgeall", aliases=["pa", "cpa"])
+    @command(aliases=["cp"])
+    @has_permissions(manage_messages=True)
+    async def _purge(self, ctx, number):
+        await self.purge(ctx, number)
+
+    @command(aliases=["cpa"])
+    @has_permissions(manage_messages=True)
     async def _purgeall(self, ctx):
         await self.purgeall(ctx)
 
