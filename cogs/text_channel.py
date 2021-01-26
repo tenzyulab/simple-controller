@@ -1,7 +1,7 @@
 from asyncio import TimeoutError
 
 from discord import Embed
-from discord.ext.commands import Cog, check, command, group, has_permissions
+from discord.ext.commands import Cog, command, group
 
 
 class TextChannel(Cog):
