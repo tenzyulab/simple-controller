@@ -13,12 +13,13 @@ class TextChannel(Cog):
 
     @group()
     async def channel(self, ctx):
-        if ctx.invoked_subcommand is None:
-            await ctx.send("無効なchannelコマンドです。")
+        """help channelで詳細を表示"""
+        if not ctx.invoked_subcommand:
+            await ctx.send("サブコマンドを指定してください。")
 
     @channel.command()
     async def purge(self, ctx, number: int):
-        """!purge <number> で指定された数のメッセージを一括削除します。"""
+        """purge <number> で指定された数のメッセージを一括削除します。"""
         if not await self.has_permission_manage_messages(ctx):
             await ctx.send("あなたにはメッセージの管理権限がありません。")
             return
