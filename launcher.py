@@ -7,6 +7,7 @@ from discord.ext.commands import (
     Bot,
     CheckFailure,
     CommandNotFound,
+    MissingPermissions,
     when_mentioned_or,
 )
 
@@ -37,6 +38,9 @@ class MyBot(Bot):
             CommandNotFound,
         )
         if isinstance(error, ignore_errors):
+            return
+        if isinstance(error, MissingPermissions):
+            await ctx.send("あなたにはこのコマンドを実行する権限がありません。")
             return
         await ctx.send(error)
 
