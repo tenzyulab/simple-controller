@@ -1,6 +1,7 @@
 from pathlib import Path
 from traceback import print_exc
 
+from discord import Game
 from discord.ext.commands import (
     BadArgument,
     Bot,
@@ -26,6 +27,8 @@ class MyBot(Bot):
 
     async def on_ready(self):
         print(f"logged in as: {self.user}")
+        activity = Game(name="?help または @Simple Controller help")
+        await self.change_presence(activity=activity)
 
     async def on_command_error(self, ctx, error):
         ignore_errors = (
