@@ -68,7 +68,7 @@ class ErrorHandler(Cog):
             missing = ", ".join(
                 self.permissions_jp[perm] for perm in error.missing_perms
             )
-            message = f"あなたに{missing}の権限がないため、このコマンドを実行できません。"
+            message = f"あなたに {missing} の権限がないため、このコマンドを実行できません。"
         if message is None:
             message = dedent(
                 """
