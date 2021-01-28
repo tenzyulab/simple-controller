@@ -1,20 +1,34 @@
-import discord
-from custom_prefix import change_prefix, delete_prefix, now_prefix, prefix_dict
-from discord.ext.commands import Cog, command, group
+from typing import List
+
+from discord.ext.commands import Bot, Cog, Context, command, group
+from src.custom_prefix import (change_prefix, delete_prefix, get_prefix,
+                               prefix_dict)
 
 
 class ManagePrefix(Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: Bot):
         self.bot = bot
-        self.bot.prefix_dict = prefix_dict
 
-    async def cog_check(self, ctx):
-        return ctx.author.guild_permissions.administrator
+    async def cog_check(self, ctx: Context) -> None:
+        return ctx.author.guild_permissions.manage_nicknames
 
-    @group()
-    async def prefix(self, ctx):
-        await ctx.send(f"現在のプレフィックスは{now_prefix(ctx.guild.id)}です")
+    @group(invoke_without_command=True)
+    async def prefix(self, ctx: Context) -> None:
+        now_prefix: List[str] = get_prefix(self.bot, ctx.message)
+        await ctx.send(f"現在のプレフィックスは {' と '.join(now_prefix[2:])} です")
+
+    @prefix.command()
+    async def set(self, ctx: Context, new_prefix: str) -> None:
+        result: List[str] = await change_prefix(ctx.guild.id, new_prefix)
+        await ctx.send("プレフィックスを {} から {} に変更しました".format(*result))
+
+    @prefix.command()
+    async def reset(self, ctx: Context) -> None:
+        before_prefix: str = await delete_prefix(ctx.guild.id)
+        await ctx.send(
+            f"カスタムプレフィックス {before_prefix} を削除しました。。\nニックネームでプレフィックスを指定している場合はそちらが優先されます"
+        )
 
 
-def setup(bot):
+def setup(bot: Bot) -> None:
     bot.add_cog(ManagePrefix(bot))
