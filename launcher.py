@@ -2,20 +2,15 @@ from pathlib import Path
 from traceback import print_exc
 
 from discord import Game
-from discord.ext.commands import (
-    BadArgument,
-    Bot,
-    CheckFailure,
-    CommandNotFound,
-    when_mentioned_or,
-)
+from discord.ext.commands import Bot
 
 import const
+from src.custom_prefix import get_prefix
 
 
 class MyBot(Bot):
-    def __init__(self):
-        super().__init__(command_prefix=when_mentioned_or(const.BOT_PREFIX))
+    def __init__(self, command_prefix):
+        super().__init__(command_prefix)
         print(f"{const.BOT_NAME} を起動します。")
 
         for cog in Path("cogs/").glob("*.py"):
@@ -32,5 +27,5 @@ class MyBot(Bot):
 
 
 if __name__ == "__main__":
-    bot = MyBot()
+    bot = MyBot(command_prefix=get_prefix)
     bot.run(const.DISCORD_BOT_TOKEN)
