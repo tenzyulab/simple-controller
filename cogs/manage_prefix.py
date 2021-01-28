@@ -1,15 +1,14 @@
 from typing import List
 
-from discord.ext.commands import Bot, Cog, Context, command, group
-from src.custom_prefix import (change_prefix, delete_prefix, get_prefix,
-                               prefix_dict)
+from discord.ext.commands import Bot, Cog, Context, group
+from src.custom_prefix import change_prefix, delete_prefix, get_prefix
 
 
 class ManagePrefix(Cog):
-    def __init__(self, bot: Bot):
+    def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
-    async def cog_check(self, ctx: Context) -> None:
+    async def cog_check(self, ctx: Context) -> bool:
         return ctx.author.guild_permissions.manage_nicknames
 
     @group(invoke_without_command=True)
