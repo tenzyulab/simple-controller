@@ -34,17 +34,17 @@ async def change_prefix(guild_id: int, new_prefix: str) -> Tuple[str]:
     except KeyError:
         before_prefix: str = const.BOT_PREFIX
     prefix_dict[str(guild_id)] = new_prefix
-    await reload_prefix()
+    await write_to_json()
     return before_prefix, new_prefix
 
 
 async def delete_prefix(guild_id: int) -> None:
     before_prefix: str = prefix_dict[str(guild_id)]
     del prefix_dict[str(guild_id)]
-    await reload_prefix()
+    await write_to_json()
     return before_prefix
 
 
-async def reload_prefix() -> None:
+async def write_to_json() -> None:
     async with aiofiles.open("database/prefix.json", "w") as f:
         await f.write(json.dumps(prefix_dict, indent=4))
