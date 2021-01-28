@@ -7,7 +7,6 @@ from discord.ext.commands import (
     Bot,
     CheckFailure,
     CommandNotFound,
-    MissingPermissions,
     when_mentioned_or,
 )
 
@@ -30,19 +29,6 @@ class MyBot(Bot):
         print(f"{self.user} としてログインしました。")
         activity = Game(name="?help または @Simple Controller help")
         await self.change_presence(activity=activity)
-
-    async def on_command_error(self, ctx, error):
-        ignore_errors = (
-            BadArgument,
-            CheckFailure,
-            CommandNotFound,
-        )
-        if isinstance(error, ignore_errors):
-            return
-        if isinstance(error, MissingPermissions):
-            await ctx.send("あなたにはこのコマンドを実行する権限がありません。")
-            return
-        await ctx.send(error)
 
 
 if __name__ == "__main__":
