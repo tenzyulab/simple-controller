@@ -1,3 +1,4 @@
+from textwrap import dedent
 from typing import List, Tuple
 
 from discord.ext.commands import Bot, Cog, Context, group, has_permissions
@@ -25,9 +26,13 @@ class ManagePrefix(Cog):
     async def reset(self, ctx: Context) -> None:
         """カスタムプレフィックスを削除します。"""
         before_prefix: str = await delete_prefix(ctx.guild.id)
-        await ctx.send(
-            f"カスタムプレフィックス {before_prefix} を削除しました。\nニックネームでプレフィックスを指定している場合はそちらが優先されます。"
+        message = dedent(
+            f"""
+            カスタムプレフィックス {before_prefix} を削除しました。
+            ニックネームでプレフィックスを指定している場合はそちらが優先されます。
+            """
         )
+        await ctx.send(message)
 
 
 def setup(bot: Bot) -> None:
