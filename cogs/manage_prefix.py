@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-from discord.ext.commands import Bot, Cog, Context, group
+from discord.ext.commands import Bot, Cog, Context, group, has_permissions
 from src.custom_prefix import change_prefix, delete_prefix, get_prefix
 
 
