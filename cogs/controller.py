@@ -7,7 +7,7 @@ class Controller(commands.Cog):
         self.bot = bot
 
     async def cog_check(self, ctx):
-        return ctx.author.guild_permissions.administrator
+        return await commands.has_permissions(administrator=True).predicate(ctx)
 
     @commands.command(aliases=["rn"])
     async def rename(self, ctx, name):
