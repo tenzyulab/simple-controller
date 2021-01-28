@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from discord.ext.commands import Bot, Cog, Context, group
 from src.custom_prefix import change_prefix, delete_prefix, get_prefix
@@ -18,7 +18,7 @@ class ManagePrefix(Cog):
 
     @prefix.command(aliases=["s"])
     async def set(self, ctx: Context, new_prefix: str) -> None:
-        result: List[str] = await change_prefix(ctx.guild.id, new_prefix)
+        result: Tuple[str] = await change_prefix(ctx.guild.id, new_prefix)
         await ctx.send("プレフィックスを {} から {} に変更しました。".format(*result))
 
     @prefix.command(alias=["r"])
