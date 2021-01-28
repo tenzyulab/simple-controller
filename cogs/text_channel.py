@@ -3,32 +3,12 @@ from textwrap import dedent
 
 from discord import Embed
 from discord.ext.commands import Cog, Context, command, group, has_permissions
+from utils.confirm import Confirm
 
 
 class TextChannel(Cog):
     def __init__(self, bot):
         self.bot = bot
-
-    async def confirm_dialog(self, ctx, what: str):
-        message = dedent(
-            f"""
-            {ctx.author.mention} 本当に{what}しますか?
-            実行する場合は20秒以内に `y` を送信してください。
-            それ以外のメッセージを送信するとキャンセルできます。
-            """
-        )
-        await ctx.send(message)
-
-    async def get_confirmation_response(self, ctx):
-        try:
-            response = await self.bot.wait_for(
-                "message",
-                timeout=20,
-                check=lambda messages: messages.author.id == ctx.author.id,
-            )
-            return response
-        except TimeoutError:
-            return None
 
     @group()
     async def channel(self, ctx):
@@ -42,8 +22,8 @@ class TextChannel(Cog):
         """チャンネルを削除します。"""
         if reason is None:
             reason = "削除された理由は記載されていません。"
-        await self.confirm_dialog(ctx, "チャンネルを削除")
-        response = await self.get_confirmation_response(ctx)
+        await Confirm.dialog(ctx, "チャンネルを削除")
+        response = await Confirm.get_response(ctx)
         if response is None:
             await ctx.send("タイムアウトしました。")
             return
@@ -65,8 +45,8 @@ class TextChannel(Cog):
     @has_permissions(manage_messages=True)
     async def purgeall(self, ctx):
         """全てのメッセージを一括削除します。"""
-        await self.confirm_dialog(ctx, "全てのメッセージを削除")
-        response = await self.get_confirmation_response(ctx)
+        await Confirm.dialog(ctx, "全てのメッセージを削除")
+        response = await Confirm.get_response(ctx)
         if response is None:
             await ctx.send("タイムアウトしました。")
             return
