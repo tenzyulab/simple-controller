@@ -1,3 +1,5 @@
+from textwrap import dedent
+
 from discord.ext.commands import (
     BadArgument,
     Bot,
@@ -57,12 +59,18 @@ class ErrorHandler(Cog):
         if isinstance(error, ignore_errors):
             return
         elif isinstance(error, MissingPermissions):
-            missing = "、".join(
+            missing = ", ".join(
                 self.permissions_jp[perm] for perm in error.missing_perms
             )
             message = f"あなたに{missing}の権限がないため、このコマンドを実行できません。"
         if message is None:
-            message = "何らかの想定されていないエラーが発生しました。"
+            message = dedent(
+                """
+                想定されていないエラーが発生しました。
+                よければ、このサーバーで報告してください。
+                https://discord.gg/4nSKCE9RRn
+                """
+            )
         await ctx.send(message)
 
 
