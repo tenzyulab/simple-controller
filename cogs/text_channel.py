@@ -50,7 +50,7 @@ class TextChannel(Cog):
         if not response.content in ["y", "Y", "ｙ", "Ｙ"]:
             await ctx.send("キャンセルしました。")
             return
-        await ctx.channel.delete(reason)
+        await ctx.channel.delete(reason=reason)
 
     @channel.command()
     @has_permissions(manage_messages=True)
