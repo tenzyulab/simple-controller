@@ -1,6 +1,6 @@
 import json
 from re import compile
-from typing import Dict
+from typing import Dict, List, Tuple
 
 import aiofiles
 import const
@@ -9,37 +9,37 @@ from discord.ext.commands import Bot
 from discord.ext.commands.bot import when_mentioned_or
 
 NICKNAME_PATTERN = compile(r"\[(.+)\]")
-with open("src/prefix.json", encoding='UTF-8') as f:
+
+with open("database/prefix.json", encoding="UTF-8") as f:
     prefix_dict: Dict[str, str] = json.loads(f.read())
 
 
-def get_prefix(bot: Bot, message: Message):
+def get_prefix(bot: Bot, message: Message) -> List[str]:
     prefixes = []
     match_nickname = NICKNAME_PATTERN.match(message.guild.me.display_name)
-    print(type(match_nickname))
     if match_nickname:
-        prefixes.append(match_nickname.groups(1))
+        prefixes.append(match_nickname.group(1))
     if str(message.guild.id) in prefix_dict.keys():
-        prefixes.append(prefix_dict)
+        prefixes.append(prefix_dict[str(message.guild.id)])
     if not prefixes:
         prefixes = [const.BOT_PREFIX]
     return when_mentioned_or(*prefixes)(bot, message)
 
 
-async def reload_prefix():
-    async with aiofiles.open('prefix.json', 'w') as f:
-        await f.write(json.dumps(prefix_dict, indent=4))
-
-
-async def change_prefix(guild_id: int, new_prefix: str):
-    before_prefix = prefix_dict[guild_id]
-    prefix_dict[guild_id] = new_prefix
+async def change_prefix(guild_id: int, new_prefix: str) -> Tuple[str]:
+    before_prefix: str = prefix_dict[str(guild_id)]
+    prefix_dict[str(guild_id)] = new_prefix
     await reload_prefix()
     return before_prefix, new_prefix
 
 
-async def delete_prefix(guild_id: int):
-    before_prefix = prefix_dict[guild_id]
-    prefix_dict.remove(guild_id)
+async def delete_prefix(guild_id: int) -> None:
+    before_prefix = prefix_dict[str(guild_id)]
+    del prefix_dict[str(guild_id)]
     await reload_prefix()
     return before_prefix
+
+
+async def reload_prefix() -> None:
+    async with aiofiles.open("database/prefix.json", "w") as f:
+        await f.write(json.dumps(prefix_dict, indent=4))
