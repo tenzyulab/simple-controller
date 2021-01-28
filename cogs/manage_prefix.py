@@ -16,12 +16,11 @@ class ManagePrefix(Cog):
         now_prefix: List[str] = get_prefix(self.bot, ctx.message)
         await ctx.send(f"現在のプレフィックスは {' と '.join(now_prefix[2:])} です。")
 
-    @prefix.command(aliases=["s"])
-    async def set(self, ctx: Context, new_prefix: str) -> None:
+    @prefix.command(name="set", aliases=["s"])
         result: Tuple[str] = await change_prefix(ctx.guild.id, new_prefix)
         await ctx.send("プレフィックスを {} から {} に変更しました。".format(*result))
 
-    @prefix.command(alias=["r"])
+    @prefix.command(aliases=["r"])
     async def reset(self, ctx: Context) -> None:
         before_prefix: str = await delete_prefix(ctx.guild.id)
         await ctx.send(
