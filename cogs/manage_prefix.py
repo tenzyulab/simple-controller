@@ -8,9 +8,7 @@ class ManagePrefix(Cog):
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
-    async def cog_check(self, ctx: Context) -> bool:
-        return ctx.author.guild_permissions.manage_nicknames
-
+    @has_permissions(manage_nicknames=True)
     @group(invoke_without_command=True, aliases=["p"])
     async def prefix(self, ctx: Context) -> None:
         now_prefix: List[str] = get_prefix(self.bot, ctx.message)
