@@ -19,7 +19,7 @@ class ManagePrefix(Cog):
     @prefix.command(name="set", aliases=["s"])
     async def _set(self, ctx: Context, new_prefix: str) -> None:
         """プレフィックスを変更します。"""
-        result: Tuple[str] = await change_prefix(ctx.guild.id, new_prefix)
+        result: Tuple[str, str] = await change_prefix(ctx.guild.id, new_prefix)
         await ctx.send("プレフィックスを {} から {} に変更しました。".format(*result))
 
     @prefix.command(aliases=["r"])

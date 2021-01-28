@@ -28,7 +28,7 @@ def get_prefix(bot: Bot, message: Message) -> List[str]:
     return when_mentioned_or(*prefixes)(bot, message)
 
 
-async def change_prefix(guild_id: int, new_prefix: str) -> Tuple[str]:
+async def change_prefix(guild_id: int, new_prefix: str) -> Tuple[str, str]:
     try:
         before_prefix: str = prefix_dict[str(guild_id)]
     except KeyError:
@@ -38,7 +38,7 @@ async def change_prefix(guild_id: int, new_prefix: str) -> Tuple[str]:
     return before_prefix, new_prefix
 
 
-async def delete_prefix(guild_id: int) -> None:
+async def delete_prefix(guild_id: int) -> str:
     before_prefix: str = prefix_dict[str(guild_id)]
     del prefix_dict[str(guild_id)]
     await write_to_json()
