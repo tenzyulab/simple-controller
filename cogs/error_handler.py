@@ -13,6 +13,7 @@ from discord.ext.commands import (
 
 class ErrorHandler(Cog):
     permissions_jp = {
+        # サーバー全般の権限
         "view_channel": "チャンネルを見る",
         "manage_channels": "チャンネルの管理",
         "manage_roles": "ロールの管理",
@@ -21,11 +22,13 @@ class ErrorHandler(Cog):
         "view_guild_insights": "サーバーインサイトを見る",
         "manage_webhooks": "ウェブフックの管理",
         "manage_guild": "サーバー管理",
+        # メンバーシップ権限
         "create_instant_invite": "招待を作成",
         "change_nickname": "ニックネームの変更",
         "manage_nicknames": "ニックネームの管理",
         "kick_members": "メンバーをキック",
         "ban_members": "メンバーをBAN",
+        # テキストチャンネル権限
         "send_messages": "メッセージを送信",
         "embed_links": "埋め込みリンク",
         "attach_files": "ファイルを添付",
@@ -35,6 +38,7 @@ class ErrorHandler(Cog):
         "manage_messages": "メッセージの管理",
         "read_message_history": "メッセージ履歴を読む",
         "send_tts_messages": "テキスト読み上げメッセージを送信する",
+        # ボイスチャンネル権限
         "connect": "接続",
         "speak": "発言",
         "stream": "動画",
@@ -43,6 +47,7 @@ class ErrorHandler(Cog):
         "mute_members": "メンバーをミュート",
         "deafen_members": "メンバーのスピーカーをミュート",
         "move_members": "メンバーを移動",
+        # 高度な権限
         "administrator": "管理者",
     }
 
@@ -55,10 +60,11 @@ class ErrorHandler(Cog):
             BadArgument,
             CommandNotFound,
         )
-        message = None
         if isinstance(error, ignore_errors):
             return
-        elif isinstance(error, MissingPermissions):
+
+        message = None
+        if isinstance(error, MissingPermissions):
             missing = ", ".join(
                 self.permissions_jp[perm] for perm in error.missing_perms
             )
