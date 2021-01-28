@@ -14,7 +14,7 @@ class ManagePrefix(Cog):
     @group(invoke_without_command=True)
     async def prefix(self, ctx: Context) -> None:
         now_prefix: List[str] = get_prefix(self.bot, ctx.message)
-        await ctx.send(f"現在のプレフィックスは {' と '.join(now_prefix[2:])} です")
+        await ctx.send(f"現在のプレフィックスは {' と '.join(now_prefix[2:])} です。")
 
     @prefix.command()
     async def set(self, ctx: Context, new_prefix: str) -> None:
