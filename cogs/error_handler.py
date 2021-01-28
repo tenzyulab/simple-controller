@@ -1,4 +1,12 @@
-from discord.ext.commands import Bot, Cog, CommandError, Context, MissingPermissions
+from discord.ext.commands import (
+    BadArgument,
+    Bot,
+    Cog,
+    CommandError,
+    CommandNotFound,
+    Context,
+    MissingPermissions,
+)
 
 
 class ErrorHandler(Cog):
@@ -41,8 +49,14 @@ class ErrorHandler(Cog):
 
     @Cog.listener()
     async def on_command_error(self, ctx: Context, error: CommandError):
+        ignore_errors = (
+            BadArgument,
+            CommandNotFound,
+        )
         message = None
-        if isinstance(error, MissingPermissions):
+        if isinstance(error, ignore_errors):
+            return
+        elif isinstance(error, MissingPermissions):
             missing = "、".join(
                 self.permissions_jp[perm] for perm in error.missing_perms
             )
