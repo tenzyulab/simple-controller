@@ -19,13 +19,13 @@ class ManagePrefix(Cog):
     @prefix.command()
     async def set(self, ctx: Context, new_prefix: str) -> None:
         result: List[str] = await change_prefix(ctx.guild.id, new_prefix)
-        await ctx.send("プレフィックスを {} から {} に変更しました".format(*result))
+        await ctx.send("プレフィックスを {} から {} に変更しました。".format(*result))
 
     @prefix.command()
     async def reset(self, ctx: Context) -> None:
         before_prefix: str = await delete_prefix(ctx.guild.id)
         await ctx.send(
-            f"カスタムプレフィックス {before_prefix} を削除しました。。\nニックネームでプレフィックスを指定している場合はそちらが優先されます"
+            f"カスタムプレフィックス {before_prefix} を削除しました。\nニックネームでプレフィックスを指定している場合はそちらが優先されます。"
         )
 
 
