@@ -8,13 +8,13 @@ class TextChannel(Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @group()
+    @group(aliases=["ch"])
     async def channel(self, ctx):
         """help channelで詳細を表示"""
         if not ctx.invoked_subcommand:
             await ctx.send("サブコマンドを指定してください。")
 
-    @channel.command()
+    @channel.command(aliases="p")
     @has_permissions(manage_messages=True)
     async def purge(self, ctx, number: int):
         """purge <number> で指定された数のメッセージを一括削除します。"""
@@ -23,7 +23,7 @@ class TextChannel(Cog):
         embed.set_footer(text="このメッセージは10秒後に自動で削除されます。")
         await ctx.send(embed=embed, delete_after=10)
 
-    @channel.command()
+    @channel.command(aliases=["pa"])
     @has_permissions(manage_messages=True)
     async def purgeall(self, ctx):
         """全てのメッセージを一括削除します。"""
@@ -48,16 +48,6 @@ class TextChannel(Cog):
         embed = Embed(description="メッセージを全件削除しました。", colour=0x000000)
         embed.set_footer(text="このメッセージは10秒後に自動で削除されます。")
         await ctx.send(embed=embed, delete_after=10)
-
-    @command(aliases=["cp"])
-    @has_permissions(manage_messages=True)
-    async def _purge(self, ctx, number):
-        await self.purge(ctx, number)
-
-    @command(aliases=["cpa"])
-    @has_permissions(manage_messages=True)
-    async def _purgeall(self, ctx):
-        await self.purgeall(ctx)
 
 
 def setup(bot):
