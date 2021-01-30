@@ -3,6 +3,7 @@ from textwrap import dedent
 
 
 class Confirm:
+    @staticmethod
     async def dialog(ctx, what: str):
         message = dedent(
             f"""
@@ -13,6 +14,7 @@ class Confirm:
         )
         await ctx.send(message)
 
+    @staticmethod
     async def get_response(ctx):
         try:
             response = await ctx.bot.wait_for(
