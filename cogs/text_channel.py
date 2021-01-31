@@ -1,7 +1,9 @@
 from asyncio import TimeoutError
+from textwrap import dedent
 
 from discord import Embed, utils
-from discord.ext.commands import Cog, command, group, has_permissions
+from discord.ext.commands import Cog, Context, command, group, has_permissions
+from src.utils import Confirm
 
 
 class TextChannel(Cog):
@@ -13,6 +15,22 @@ class TextChannel(Cog):
         """help channelで詳細を表示"""
         if not ctx.invoked_subcommand:
             await ctx.send("サブコマンドを指定してください。")
+
+    @channel.command(aliases=["del"])
+    @has_permissions(manage_channels=True)
+    async def delete(self, ctx: Context, *, reason: str = None):
+        """チャンネルを削除します。"""
+        if reason is None:
+            reason = "削除された理由は記載されていません。"
+        await Confirm.dialog(ctx, "チャンネルを削除")
+        response = await Confirm.get_response(ctx)
+        if response is None:
+            await ctx.send("タイムアウトしました。")
+            return
+        if not response.content in ["y", "Y", "ｙ", "Ｙ"]:
+            await ctx.send("キャンセルしました。")
+            return
+        await ctx.channel.delete(reason=reason)
 
     @channel.command(aliases=["p"])
     @has_permissions(manage_messages=True)
@@ -27,18 +45,9 @@ class TextChannel(Cog):
     @has_permissions(manage_messages=True)
     async def purgeall(self, ctx):
         """全てのメッセージを一括削除します。"""
-        await ctx.send(
-            f"""{ctx.author.mention} 本当に全てのメッセージを一括削除しますか？\n
-        実行する場合は20秒以内に `y` を送信してください。\n
-        それ以外のメッセージを送信するとキャンセルできます。"""
-        )
-        try:
-            response = await self.bot.wait_for(
-                "message",
-                timeout=20,
-                check=lambda messages: messages.author.id == ctx.author.id,
-            )
-        except TimeoutError:
+        await Confirm.dialog(ctx, "全てのメッセージを削除")
+        response = await Confirm.get_response(ctx)
+        if response is None:
             await ctx.send("タイムアウトしました。")
             return
         if not response.content in ["y", "Y", "ｙ", "Ｙ"]:
