@@ -3,7 +3,7 @@ from textwrap import dedent
 
 from discord import Embed, utils
 from discord.ext.commands import Cog, Context, command, group, has_permissions
-from utils.confirm import Confirm
+from src.utils import Confirm
 
 
 class TextChannel(Cog):
@@ -31,7 +31,6 @@ class TextChannel(Cog):
             await ctx.send("キャンセルしました。")
             return
         await ctx.channel.delete(reason=reason)
-
 
     @channel.command(aliases=["p"])
     @has_permissions(manage_messages=True)
