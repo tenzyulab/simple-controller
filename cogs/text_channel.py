@@ -93,6 +93,14 @@ class TextChannel(Cog):
         await ctx.channel.edit(sync_permissions=True)
         await ctx.send("チャンネルの権限をカテゴリーに同期しました。")
 
+    @channel.command(aliases=["po"])
+    @has_permissions(administrator=True)
+    async def position(self, ctx: Context, difference: int):
+        """チャンネルの位置を正で上, 負で下に数値分移動します。"""
+        new_position = ctx.channel.position - difference
+        await ctx.channel.edit(position=new_position)
+        await ctx.reply("チャンネルの位置を移動しました。")
+
 
 def setup(bot):
     bot.add_cog(TextChannel(bot))
