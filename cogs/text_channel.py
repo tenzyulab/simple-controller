@@ -93,6 +93,14 @@ class TextChannel(Cog):
         await ctx.channel.edit(sync_permissions=True)
         await ctx.send("チャンネルの権限をカテゴリーに同期しました。")
 
+    @channel.command(aliases=["ua"])
+    @has_permissions(manage_messages=True)
+    async def unpinall(self, ctx: Context):
+        """チャンネルのピン留めを全て外します。"""
+        pins = await ctx.channel.pins()
+        [await pin.unpin() for pin in pins]
+        await ctx.reply(f"{len(pins)} 件のピン留めを外しました。")
+
 
 def setup(bot):
     bot.add_cog(TextChannel(bot))
