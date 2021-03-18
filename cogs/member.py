@@ -20,7 +20,7 @@ class MemberCog(Cog):
             await ctx.reply("キックするユーザーを指定してください。")
             return
         if reason is None:
-            reason = "削除された理由は記載されていません。"
+            reason = "キックされた理由は記載されていません。"
         await member.kick(reason=reason)
         await ctx.reply(f"{member.display_name} をキックしました。")
 
