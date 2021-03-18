@@ -93,6 +93,17 @@ class TextChannel(Cog):
         await ctx.channel.edit(sync_permissions=True)
         await ctx.send("チャンネルの権限をカテゴリーに同期しました。")
 
+    @channel.command(aliases=["cw"])
+    @has_permissions(manage_webhooks=True)
+    async def createwh(self, ctx: Context, name: str = None):
+        """チャンネルの Webhook を作成します。"""
+        if name is None:
+            name = ctx.channel.name
+        new_webhook = await ctx.channel.create_webhook(name=name)
+        await ctx.author.send(
+            f"{ctx.channel.mention} の Webhook を作成しました。\nURL: {new_webhook.url}"
+        )
+
 
 def setup(bot):
     bot.add_cog(TextChannel(bot))
