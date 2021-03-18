@@ -65,7 +65,7 @@ class TextChannel(Cog):
         await ctx.channel.edit(name=name)
         await ctx.send(f"{ctx.author.mention} チャンネル名を {ctx.channel.name} に変更しました。")
 
-    @channel.command()
+    @channel.command(aliases=["ns"])
     @has_permissions(manage_channels=True)
     async def nsfw(self, ctx):
         """チャンネルのNSFW設定を切り替えます。"""
@@ -86,7 +86,7 @@ class TextChannel(Cog):
         await ctx.channel.set_permissions(everyone, send_messages=False)
         await ctx.send("everyoneからのメッセージ送信を禁止しました。")
 
-    @channel.command()
+    @channel.command(aliases=["sy"])
     @has_permissions(administrator=True)
     async def sync(self, ctx):
         """チャンネルの権限をカテゴリーに同期します。"""
