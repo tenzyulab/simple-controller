@@ -103,10 +103,10 @@ class TextChannel(Cog):
         new_webhook = await ctx.channel.create_webhook(name=name)
         try:
             await ctx.author.send(
-            f"{ctx.channel.mention} の Webhook を作成しました。\nURL: {new_webhook.url}"
-        )
+                f"{ctx.channel.mention} の Webhook を作成しました。\nURL: {new_webhook.url}"
+            )
         except Forbidden:
-            await ctx.send{f"{ctx.channel.mention} の Webhook を作成しました。"}
+            await ctx.send(f"{ctx.channel.mention} の Webhook を作成しました。")
 
     @channel.command(aliases=["ua"])
     @has_permissions(manage_messages=True)
