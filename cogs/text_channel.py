@@ -2,6 +2,7 @@ from asyncio import TimeoutError
 from textwrap import dedent
 
 from discord import Embed, utils
+from discord.errors import Forbidden
 from discord.ext.commands import Cog, Context, command, group, has_permissions
 from src.utils import Confirm
 
@@ -104,7 +105,7 @@ class TextChannel(Cog):
             await ctx.author.send(
             f"{ctx.channel.mention} の Webhook を作成しました。\nURL: {new_webhook.url}"
         )
-        except Exception:
+        except Forbidden:
             await ctx.send{f"{ctx.channel.mention} の Webhook を作成しました。"}
 
 
