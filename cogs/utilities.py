@@ -1,6 +1,8 @@
 from time import monotonic
 
+from discord import Permissions
 from discord.ext.commands import Bot, Cog, Context, command
+from discord.utils import oauth_url
 
 
 class Utilities(Cog):
@@ -18,8 +20,10 @@ class Utilities(Cog):
     @command(aliases=["in"])
     async def invite(self, ctx: Context):
         """この BOT の招待リンクを送ります。"""
-        url = "https://discord.com/api/oauth2/authorize?client_id=802867226700677120&permissions=8&scope=bot"
-        await ctx.reply(url)
+        invite_url = oauth_url(
+            self.bot.user.id, permissions=Permissions(administrator=True)
+        )
+        await ctx.reply(f"<{invite_url}>")
 
 
 def setup(bot: Bot):
