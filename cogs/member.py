@@ -24,6 +24,18 @@ class MemberCog(Cog):
         await member.ban(reason=reason)
         await ctx.reply(f"{member.display_name} をBANしました。")
 
+    @member.command(aliases=["ki"])
+    @has_permissions(kick_members=True)
+    async def kick(self, ctx: Context, member: Member = None, *, reason: str = None):
+        """メンバーをキックします。"""
+        if member is None:
+            await ctx.reply("キックするユーザーを指定してください。")
+            return
+        if reason is None:
+            reason = "キックされた理由は記載されていません。"
+        await member.kick(reason=reason)
+        await ctx.reply(f"{member.display_name} をキックしました。")
+
 
 def setup(bot: Bot):
     bot.add_cog(MemberCog(bot))
