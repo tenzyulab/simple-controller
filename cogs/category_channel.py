@@ -13,7 +13,7 @@ class MyCategoryChannel(Cog):
 
     @group(aliases=["ca"])
     async def category(self, ctx: Context):
-        """help channelで詳細を表示"""
+        """help categoryで詳細を表示"""
         if not ctx.invoked_subcommand:
             await ctx.send("サブコマンドを指定してください。")
 
