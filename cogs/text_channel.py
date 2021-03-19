@@ -93,6 +93,22 @@ class TextChannel(Cog):
         await ctx.channel.edit(sync_permissions=True)
         await ctx.send("チャンネルの権限をカテゴリーに同期しました。")
 
+    @channel.command(aliases=["ua"])
+    @has_permissions(manage_messages=True)
+    async def unpinall(self, ctx: Context):
+        """チャンネルのピン留めを全て外します。"""
+        await Confirm.dialog(ctx, "チャンネルのピン留めを全て外")
+        response = await Confirm.get_response(ctx)
+        if response is None:
+            await ctx.reply("タイムアウトしました。")
+            return
+        if not response.content in ["y", "Y", "ｙ", "Ｙ"]:
+            await ctx.reply("キャンセルしました。")
+            return
+        pins = await ctx.channel.pins()
+        [await pin.unpin() for pin in pins]
+        await ctx.reply(f"{len(pins)} 件のピン留めを外しました。")
+
     @channel.command(aliases=["to"])
     @has_permissions(manage_channels=True)
     async def topic(self, ctx: Context, topic: str = None):
