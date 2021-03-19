@@ -1,6 +1,5 @@
 from time import monotonic
 
-from discord import Permissions
 from discord.ext.commands import Bot, Cog, Context, command
 from discord.utils import oauth_url
 
