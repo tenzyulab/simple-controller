@@ -100,9 +100,12 @@ class TextChannel(Cog):
         if name is None:
             name = ctx.channel.name
         new_webhook = await ctx.channel.create_webhook(name=name)
-        await ctx.author.send(
+        try:
+            await ctx.author.send(
             f"{ctx.channel.mention} の Webhook を作成しました。\nURL: {new_webhook.url}"
         )
+        except Exception:
+            await ctx.send{f"{ctx.channel.mention} の Webhook を作成しました。"}
 
 
 def setup(bot):
