@@ -12,6 +12,18 @@ class MemberCog(Cog):
         if not ctx.invoked_subcommand:
             await ctx.send("サブコマンドを指定してください。")
 
+    @member.command(aliases=["ba"])
+    @has_permissions(ban_members=True)
+    async def ban(self, ctx: Context, member: Member = None, *, reason: str = None):
+        """メンバーをBANします。"""
+        if member is None:
+            await ctx.reply("BANするユーザーを指定してください。")
+            return
+        if reason is None:
+            reason = "BANされた理由は記載されていません。"
+        await member.ban(reason=reason)
+        await ctx.reply(f"{member.display_name} をBANしました。")
+
     @member.command(aliases=["ki"])
     @has_permissions(kick_members=True)
     async def kick(self, ctx: Context, member: Member = None, *, reason: str = None):
