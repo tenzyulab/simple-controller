@@ -93,9 +93,9 @@ class TextChannel(Cog):
         await ctx.channel.edit(sync_permissions=True)
         await ctx.send("チャンネルの権限をカテゴリーに同期しました。")
 
-    @channel.command(aliases=["et"])
+    @channel.command(aliases=["to"])
     @has_permissions(manage_channels=True)
-    async def edit_topic(self, ctx: Context, topic: str = None):
+    async def topic(self, ctx: Context, topic: str = None):
         """チャンネルのトピックを変更します。"""
         await ctx.channel.edit(topic=topic)
         await ctx.reply(
