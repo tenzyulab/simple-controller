@@ -7,7 +7,7 @@ class Utilities(Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @command()
+    @command(aliases=["pi"])
     async def ping(self, ctx):
         """接続と応答速度を確認できます。"""
         tmp = monotonic()

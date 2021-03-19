@@ -16,7 +16,7 @@
 
 ### 注意事項
 
-- 言語: python3.7.x
+- 言語: python3.9.x
 - ホスト: Google Compute Engine
 - 開発スタイル: GitHub flow
 - 使用されているエディタ: `Visual Studio Code` and `Pycharm`
@@ -25,7 +25,7 @@
 
 1. このリポジトリをクローンしてください。
 
-2. `python3.7 -m venv .venv` で仮想環境を作ることをお勧めします。
+2. `python3.9 -m venv .venv` で仮想環境を作ることをお勧めします。
 
 3. `. .venv/bin/activate` で仮想環境に入ります。
 
@@ -35,7 +35,7 @@
 
 6. .env の DISCORD_BOT_TOKEN に トークンを貼り付けてください。
 
-7. `python3.7 launcher.py` で bot を起動できます。
+7. `python3.9 launcher.py` で bot を起動できます。
 
 <hr />
 

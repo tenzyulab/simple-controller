@@ -1,7 +1,7 @@
 from asyncio import TimeoutError
 from textwrap import dedent
 
-from discord import Embed, utils
+from discord import AllowedMentions, Embed, utils
 from discord.ext.commands import Cog, Context, command, group, has_permissions
 from src.utils import Confirm
 
@@ -16,7 +16,7 @@ class TextChannel(Cog):
         if not ctx.invoked_subcommand:
             await ctx.send("サブコマンドを指定してください。")
 
-    @channel.command(aliases=["del"])
+    @channel.command(aliases=["de", "del"])
     @has_permissions(manage_channels=True)
     async def delete(self, ctx: Context, *, reason: str = None):
         """チャンネルを削除します。"""
@@ -32,7 +32,7 @@ class TextChannel(Cog):
             return
         await ctx.channel.delete(reason=reason)
 
-    @channel.command(aliases=["p"])
+    @channel.command(aliases=["pu"])
     @has_permissions(manage_messages=True)
     async def purge(self, ctx, number: int):
         """purge <number> で指定された数のメッセージを一括削除します。"""
@@ -65,7 +65,7 @@ class TextChannel(Cog):
         await ctx.channel.edit(name=name)
         await ctx.send(f"{ctx.author.mention} チャンネル名を {ctx.channel.name} に変更しました。")
 
-    @channel.command()
+    @channel.command(aliases=["ns"])
     @has_permissions(manage_channels=True)
     async def nsfw(self, ctx):
         """チャンネルのNSFW設定を切り替えます。"""
@@ -86,7 +86,7 @@ class TextChannel(Cog):
         await ctx.channel.set_permissions(everyone, send_messages=False)
         await ctx.send("everyoneからのメッセージ送信を禁止しました。")
 
-    @channel.command()
+    @channel.command(aliases=["sy"])
     @has_permissions(administrator=True)
     async def sync(self, ctx):
         """チャンネルの権限をカテゴリーに同期します。"""
@@ -108,6 +108,16 @@ class TextChannel(Cog):
         pins = await ctx.channel.pins()
         [await pin.unpin() for pin in pins]
         await ctx.reply(f"{len(pins)} 件のピン留めを外しました。")
+
+    @channel.command(aliases=["to"])
+    @has_permissions(manage_channels=True)
+    async def topic(self, ctx: Context, topic: str = None):
+        """チャンネルのトピックを変更します。"""
+        await ctx.channel.edit(topic=topic)
+        await ctx.reply(
+            f"チャンネルのトピックを {ctx.channel.topic} に変更しました。",
+            allowed_mentions=AllowedMentions(everyone=False, users=False, roles=False),
+        )
 
 
 def setup(bot):
