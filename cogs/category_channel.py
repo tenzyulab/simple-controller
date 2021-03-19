@@ -25,7 +25,7 @@ class MyCategoryChannel(Cog):
         if category is None:
             try:
                 category = ctx.channel.category
-            except Exception:
+            except AttributeError:
                 await ctx.reply("カテゴリーを指定してください。")
         if reason is None:
             reason = "削除された理由は記載されていません。"
@@ -41,7 +41,7 @@ class MyCategoryChannel(Cog):
         await category.delete(reason=reason)
         try:
             await ctx.reply("カテゴリーを削除しました。")
-        except Exception:
+        except AttributeError:
             await ctx.author.send("カテゴリーを削除しました。")
 
 
