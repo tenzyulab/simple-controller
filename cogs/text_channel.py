@@ -95,7 +95,7 @@ class TextChannel(Cog):
 
     @channel.command(aliases=["cw"])
     @has_permissions(manage_webhooks=True)
-    async def createwh(self, ctx: Context, name: str = None):
+    async def createwh(self, ctx: Context, *, name: str = None):
         """チャンネルの Webhook を作成します。"""
         if name is None:
             name = ctx.channel.name
