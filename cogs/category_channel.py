@@ -2,6 +2,7 @@ from asyncio import TimeoutError
 from textwrap import dedent
 
 from discord import CategoryChannel
+from discord.errors import NotFound
 from discord.ext.commands import Cog, Context, command, group, has_permissions
 from src.utils import Confirm
 
@@ -41,7 +42,7 @@ class MyCategoryChannel(Cog):
         await category.delete(reason=reason)
         try:
             await ctx.reply("カテゴリーを削除しました。")
-        except AttributeError:
+        except NotFound:
             await ctx.author.send("カテゴリーを削除しました。")
 
 
