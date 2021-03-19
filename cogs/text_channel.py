@@ -1,7 +1,7 @@
 from asyncio import TimeoutError
 from textwrap import dedent
 
-from discord import Embed, utils
+from discord import AllowedMentions, Embed, utils
 from discord.ext.commands import Cog, Context, command, group, has_permissions
 from src.utils import Confirm
 
@@ -98,7 +98,10 @@ class TextChannel(Cog):
     async def edit_topic(self, ctx: Context, topic: str = None):
         """チャンネルのトピックを変更します。"""
         await ctx.channel.edit(topic=topic)
-        await ctx.reply(f"チャンネルのトピックを {ctx.channel.topic} に変更しました。")
+        await ctx.reply(
+            f"チャンネルのトピックを {ctx.channel.topic} に変更しました。",
+            allowed_mentions=AllowedMentions(everyone=False, users=False, roles=False),
+        )
 
 
 def setup(bot):
