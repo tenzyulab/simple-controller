@@ -28,6 +28,7 @@ class MyCategoryChannel(Cog):
                 category = ctx.channel.category
             except AttributeError:
                 await ctx.reply("カテゴリーを指定してください。")
+                return
         if reason is None:
             reason = "削除された理由は記載されていません。"
         await Confirm.dialog(ctx, "チャンネルごとカテゴリーを削除")
