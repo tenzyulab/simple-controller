@@ -20,9 +20,7 @@ class Utilities(Cog):
     @command(aliases=["in"])
     async def invite(self, ctx: Context):
         """この BOT の招待リンクを送ります。"""
-        invite_url = oauth_url(
-            self.bot.user.id, permissions=Permissions(administrator=True)
-        )
+        invite_url = oauth_url(self.bot.user.id, Permissions(administrator=True))
         await ctx.reply(f"<{invite_url}>")
 
 
