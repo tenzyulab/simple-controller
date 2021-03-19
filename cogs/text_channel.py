@@ -16,7 +16,7 @@ class TextChannel(Cog):
         if not ctx.invoked_subcommand:
             await ctx.send("サブコマンドを指定してください。")
 
-    @channel.command(aliases=["del"])
+    @channel.command(aliases=["de", "del"])
     @has_permissions(manage_channels=True)
     async def delete(self, ctx: Context, *, reason: str = None):
         """チャンネルを削除します。"""
@@ -32,7 +32,7 @@ class TextChannel(Cog):
             return
         await ctx.channel.delete(reason=reason)
 
-    @channel.command(aliases=["p"])
+    @channel.command(aliases=["pu"])
     @has_permissions(manage_messages=True)
     async def purge(self, ctx, number: int):
         """purge <number> で指定された数のメッセージを一括削除します。"""
