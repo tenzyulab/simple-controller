@@ -16,7 +16,7 @@ class TextChannel(Cog):
         if not ctx.invoked_subcommand:
             await ctx.send("サブコマンドを指定してください。")
 
-    @channel.command(aliases=["de"])
+    @channel.command(aliases=["de", "del"])
     @has_permissions(manage_channels=True)
     async def delete(self, ctx: Context, *, reason: str = None):
         """チャンネルを削除します。"""
