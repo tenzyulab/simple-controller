@@ -2,6 +2,7 @@ from asyncio import TimeoutError
 from textwrap import dedent
 
 from discord import AllowedMentions, Embed, utils
+from discord.errors import Forbidden
 from discord.ext.commands import Cog, Context, command, group, has_permissions
 from src.utils import Confirm
 
@@ -92,6 +93,20 @@ class TextChannel(Cog):
         """チャンネルの権限をカテゴリーに同期します。"""
         await ctx.channel.edit(sync_permissions=True)
         await ctx.send("チャンネルの権限をカテゴリーに同期しました。")
+
+    @channel.command(aliases=["we"])
+    @has_permissions(manage_webhooks=True)
+    async def webhook(self, ctx: Context, *, name: str = None):
+        """チャンネルの Webhook を作成します。"""
+        if name is None:
+            name = ctx.channel.name
+        new_webhook = await ctx.channel.create_webhook(name=name)
+        try:
+            await ctx.author.send(
+            f"{ctx.channel.mention} の Webhook を作成しました。\nURL: {new_webhook.url}"
+        )
+        except Forbidden:
+            await ctx.send{f"{ctx.channel.mention} の Webhook を作成しました。"}
 
     @channel.command(aliases=["ua"])
     @has_permissions(manage_messages=True)
